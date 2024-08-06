@@ -1,0 +1,37 @@
+- name: Setup
+  hosts: all
+  tags: setup
+  roles:
+    - { role: geerlingguy.docker, become: yes }
+  tasks:
+    - name: Ignore PEP 668 because it's silly.
+      ansible.builtin.file:
+        path: /usr/lib/python3.12/EXTERNALLY-MANAGED
+        state: absent
+      become: true
+
+    - name: Install dependencies for Python 3
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        cache_valid_time: 604800
+      become: true
+      with_items:
+        - python3-pip
+        - python3-setuptools
+        - python3-venv
+
+    - name: Upgrade pip to the latest version
+      pip:
+        name: pip
+        state: latest
+        extra_args: --user
+        executable: pip3
+      become: true
+
+    - name: Install Docker Python library
+      pip:
+        name: docker
+        state: latest
+        executable: pip3
+      become: true

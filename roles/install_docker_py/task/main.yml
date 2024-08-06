@@ -1,0 +1,10 @@
+---
+- name: Install pip
+  include_role:
+    name: geerlingguy.pip
+
+- name: Install docker-py module
+  pip:
+    name: "docker=={{ item.version }}"
+  loop: "{{ pip_modules }}"
+  when: item.name == 'docker'
