@@ -6,24 +6,17 @@
     - ./group_vars/webservers/common.yml
   tasks:
     - name: Запустить Redmine в контейнере
-      community.docker.docker_container:
+      docker_container:
         name: redmine
         image: redmine:latest
-        platform: linux/amd64
-        restart: true
         ports:
-          - 3000:3000
-        env:
-          REDMINE_DB_POSTGRES: "{{ redmine_db_postgres }}"
-          REDMINE_DB_USERNAME: "{{ redmine_db_username }}"
-          REDMINE_DB_PASSWORD: "{{ redmine_db_password }}"
-          REDMINE_DB_PORT: "{{ redmine_db_port }}"
-          REDMINE_DB_DATABASE: "{{ redmine_db_database }}"
+          - "80:3000"
+        
         state: started
 
 - hosts: webservers
   roles:
-    - { role: datadog.datadog, become: yes }
+    - { role: datadog.datadog, become: yes, datadog_config_file: "/group_vars/webservers/datadog.yml" }
   tags: datadog
 
 

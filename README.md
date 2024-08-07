@@ -1,2 +1,14 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/kochev2t/devops-for-programmers-project-76/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/kochev2t/devops-for-programmers-project-76/actions)
+
+### Команды
+
+Подготовка: `make setup`
+
+Деплой: `make deploy`
+
+### Ссылка на приложение
+
+https://nutakoe.ru/
+
+
