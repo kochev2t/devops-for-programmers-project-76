@@ -6,3 +6,9 @@ deploy:
 
 monitoring:
 	ansible-playbook playbook.yml --tags datadog -i inventory.ini --vault-password-file vault_password
+
+encrypt:
+	ansible-vault encrypt --vault-password-file vault-password group_vars/webservers/vault.yml
+
+decrypt:
+	ansible-vault decrypt --vault-password-file vault-password group_vars/webservers/vault.yml
