@@ -2,21 +2,26 @@
 - hosts: all
   become: yes
   tags: deploy
-  vars_files:
-    - ./group_vars/webservers/common.yml
   tasks:
     - name: Запустить Redmine в контейнере
       docker_container:
         name: redmine
         image: redmine:latest
+        state: started
+        restart_policy: always
         ports:
           - "80:3000"
-        
-        state: started
+        env:
+          REDMINE_DB_POSTGRES: "{{ vault_redmine_db_postgres }}"
+          REDMINE_DB_DATABASE: "{{ vault_redmine_db_database }}"
+          REDMINE_DB_USERNAME: "{{ vault_redmine_db_username }}"
+          REDMINE_DB_PORTS: "{{ vault_redmine_db_ports }}"
+          REDMINE_DB_PASSWORD: "{{ vault_redmine_db_password }}"
+       
 
 - hosts: webservers
   roles:
-    - { role: datadog.datadog, become: yes, datadog_config_file: "/group_vars/webservers/datadog.yml" }
+    - { role: datadog.datadog, become: yes }
   tags: datadog
 
 
