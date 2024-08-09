@@ -6,17 +6,18 @@
     - name: Запустить Redmine в контейнере
       docker_container:
         name: redmine
-        image: redmine:latest
+        image: redmine
         state: started
         restart_policy: always
         ports:
           - "80:3000"
         env:
-          REDMINE_DB_POSTGRES: "{{ vault_redmine_db_postgres }}"
-          REDMINE_DB_DATABASE: "{{ vault_redmine_db_database }}"
-          REDMINE_DB_USERNAME: "{{ vault_redmine_db_username }}"
-          REDMINE_DB_PORTS: "{{ vault_redmine_db_ports }}"
-          REDMINE_DB_PASSWORD: "{{ vault_redmine_db_password }}"
+          PSQL_HOST: "{{ vault_redmine_db_postgres }}"
+          PSQL_PORT: "{{ vault_redmine_db_ports }}"
+          PSQL_SSLMODE: "{{ vault_redmine_db_sslmode }}"
+          PSQL_DBNAME: "{{ vault_redmine_db_database }}"
+          PSQL_USER: "{{ vault_redmine_db_username }}"
+          PSQL_TARGET_SESSION_ATTRS: "{{ vault_redmine_target }}"
        
 
 - hosts: webservers
