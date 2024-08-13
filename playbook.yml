@@ -6,7 +6,7 @@
   tasks:
     - name: Запустить Redmine в контейнере
       community.docker.docker_container:
-        image: redmine:"{{ app_tag }}"
+        image: "redmine:{{ app_tag }}"
         platform: linux/amd64
         name: redmine
         state: started
