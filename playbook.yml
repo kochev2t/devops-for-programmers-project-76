@@ -2,27 +2,27 @@
 - hosts: all
   become: yes
   tags: deploy
+  
   tasks:
     - name: Запустить Redmine в контейнере
-      docker_container:
+      community.docker.docker_container:
+        image: redmine:{{ app_tag }}
+        platform: linux/amd64
         name: redmine
-        image: redmine
         state: started
-        restart_policy: always
+        restart: true
         ports:
-          - "80:3000"
+          - "{{ app_port }}:3000"
         env:
-          PSQL_HOST: "{{ vault_redmine_db_postgres }}"
-          PSQL_PORT: "{{ vault_redmine_db_ports }}"
-          PSQL_SSLMODE: "{{ vault_redmine_db_sslmode }}"
-          PSQL_DBNAME: "{{ vault_redmine_db_database }}"
-          PSQL_USER: "{{ vault_redmine_db_username }}"
-          PSQL_TARGET_SESSION_ATTRS: "{{ vault_redmine_target }}"
+          REDMINE_DB_POSTGRES: "{{ redmine_db_postgres }}"
+          REDMINE_DB_USERNAME: "{{ redmine_db_username }}"
+          REDMINE_DB_PASSWORD: "{{ redmine_db_password }}"
+          REDMINE_DB_PORT: "{{ redmine_db_port }}"
+          REDMINE_DB_DATABASE: "{{ redmine_db_database }}"
+      become: true
        
 
 - hosts: webservers
   roles:
     - { role: datadog.datadog, become: yes }
   tags: datadog
-
-
