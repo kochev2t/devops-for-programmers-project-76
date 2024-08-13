@@ -7,4 +7,5 @@ datadog_checks:
         timeout: 15
         min_collection_interval: 30   
 
+app_port: "80"
 app_tag: "latest"
