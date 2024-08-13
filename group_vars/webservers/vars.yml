@@ -3,3 +3,14 @@ redmine_db_username: "{{ vault_redmine_db_username }}"
 redmine_db_password: "{{ vault_redmine_db_password }}"
 redmine_db_port: "{{ vault_redmine_db_port }}"
 redmine_db_database: "{{ vault_redmine_db_database }}"
+
+app_port: "80"
+
+datadog_api_key: "{{ vault_datadog_api_key }}"
+datadog_checks:
+  http_check:
+    instances:
+      - name: http_check_{{ inventory_hostname }}
+        url: http://localhost:{{ app_port }}
+        timeout: 15
+        min_collection_interval: 30  
