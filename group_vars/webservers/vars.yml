@@ -5,5 +5,5 @@ redmine_db_port: "{{ vault_redmine_db_port }}"
 redmine_db_database: "{{ vault_redmine_db_database }}"
 
 app_port: "80"
-app_tag: latest
+
 

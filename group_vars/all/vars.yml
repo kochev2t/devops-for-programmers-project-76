@@ -6,3 +6,5 @@ datadog_checks:
         url: http://localhost:{{ app_port }}
         timeout: 15
         min_collection_interval: 30   
+
+app_tag: "latest"
